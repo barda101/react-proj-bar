@@ -30,9 +30,10 @@ export function BookDetails() {
   return (
     <section className="book-details">
       <h1>{book.title}</h1>
-      <img src={`../assets/BooksImages/${Math.floor(Math.random() * 20) + 1}.jpg`} alt="book-image"/>
+      {/* <img src={`../assets/BooksImages/${Math.floor(Math.random() * 20) + 1}.jpg`} alt="book-image"/> */}
+      <img src={book.thumbnail} alt="book-image"/>
       <h2>{book.description}</h2>
-      <h3>{book.listPrice.amount}{book.listPrice.currencyCode}{' '}{book.isOnSale ? 'On Sale' : ''}</h3>
+      <h3>{book.listPrice.amount}{book.listPrice.currencyCode}{' '}{book.isOnSale && 'On Sale'}</h3>
       <button onClick={onBack}>Back</button>
     </section>
   )

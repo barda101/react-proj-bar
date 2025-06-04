@@ -526,38 +526,41 @@ function getDefaultFilter() {
 // }
 
 function _createBooks() {
+    let books = utilService.loadFromStorage(BOOK_KEY)
+    if (!books || !books.length) {
     const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
     const books = []
     for (let i = 0; i < 20; i++) {
-        const book = {
-            id: utilService.makeId(),
-            title: utilService.makeLorem(2),
-            subtitle: utilService.makeLorem(4),
-            authors: [
-                utilService.makeLorem(1)
-            ],
-            publishedDate: utilService.getRandomIntInclusive(1950, 2024),
-            description: utilService.makeLorem(20),
-            pageCount: utilService.getRandomIntInclusive(20, 600),
-            categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
-            thumbnail: `http://coding-academy.org/books-photos/${i+1}.jpg`,
-            language: "en",
-            listPrice: {
-                amount: utilService.getRandomIntInclusive(80, 500),
-                currencyCode: "EUR",
-                isOnSale: Math.random() > 0.7
+            const book = {
+                id: utilService.makeId(),
+                title: utilService.makeLorem(2),
+                subtitle: utilService.makeLorem(4),
+                authors: [
+                    utilService.makeLorem(1)
+                ],
+                publishedDate: utilService.getRandomIntInclusive(1950, 2024),
+                description: utilService.makeLorem(50),
+                pageCount: utilService.getRandomIntInclusive(20, 600),
+                categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
+                thumbnail: `../assets/BooksImages/${i+1}.jpg`,
+                language: "en",
+                listPrice: {
+                    amount: utilService.getRandomIntInclusive(80, 500),
+                    currencyCode: "EUR",
+                    isOnSale: Math.random() > 0.7
+                }
             }
+            books.push(book)
+            utilService.saveToStorage(BOOK_KEY, books)
         }
-        books.push(book)
-        utilService.saveToStorage(BOOK_KEY, books)
     }
     console.log('books', books)
 }
 
-function _createbook(title, amount, currencyCode = 'USD', isOnSale = false) {
-    const book = getEmptyBook(title, amount, currencyCode, isOnSale)
-    book.id = utilService.makeId()
-    book.description = utilService.makeLorem(5)
-    book.thumbnail = "http://ca.org/books-photos/20.jpg"
-    return book
-}
+// function _createbook(title, amount, currencyCode = 'USD', isOnSale = false) {
+//     const book = getEmptyBook(title, amount, currencyCode, isOnSale)
+//     book.id = utilService.makeId()
+//     book.description = utilService.makeLorem(5)
+//     book.thumbnail = "http://ca.org/books-photos/20.jpg"
+//     return book
+// }
