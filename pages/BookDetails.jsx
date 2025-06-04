@@ -26,14 +26,31 @@ export function BookDetails() {
       navigate('/book')
   }
 
+  function getPublishLabel(PublishedDate) {
+    const currentYear = new Date().getFullYear()
+    const age = currentYear - PublishedDate
+
+    if (age > 10) return 'Vintage'
+    if (age < 1 ) return 'New'
+    return ''
+  }
+
   if(!book) return <div>Loading...</div>
   return (
     <section className="book-details">
       <h1>{book.title}</h1>
       {/* <img src={`../assets/BooksImages/${Math.floor(Math.random() * 20) + 1}.jpg`} alt="book-image"/> */}
       <img src={book.thumbnail} alt="book-image"/>
+      <h2>
+        {book.pageCount > 500 ? 'Serious Reading' :
+        book.pageCount > 200 ? 'Descent Reading' :
+        book.pageCount < 100 ? 'Light Reading' :
+        ''}
+      </h2>
       <h2>{book.description}</h2>
-      <h3>{book.listPrice.amount}{book.listPrice.currencyCode}{' '}{book.isOnSale && 'On Sale'}</h3>
+      <h4>{getPublishLabel(book.publishedDate)}</h4>
+      <h3>{book.listPrice.amount}{book.listPrice.currencyCode}{' '}{book.listPrice.isOnSale && 'On Sale'}</h3>
+
       <button onClick={onBack}>Back</button>
     </section>
   )
