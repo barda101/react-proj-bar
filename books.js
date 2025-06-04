@@ -1,5 +1,3 @@
-
-
 const books = [
     {
         "id": "OXeMG8wNskc",
