@@ -35,6 +35,12 @@ export function BookDetails() {
     return ''
   }
 
+  function getPriceClass(amount) {
+    if (amount > 150) return 'red'
+    if (amount < 20) return 'green'
+    return ''
+  }
+
   if(!book) return <div>Loading...</div>
   return (
     <section className="book-details">
@@ -49,7 +55,7 @@ export function BookDetails() {
       </h2>
       <h2>{book.description}</h2>
       <h4>{getPublishLabel(book.publishedDate)}</h4>
-      <h3>{book.listPrice.amount}{book.listPrice.currencyCode}{' '}{book.listPrice.isOnSale && 'On Sale'}</h3>
+      <h3 className={getPriceClass(book.listPrice.amount)}>{book.listPrice.amount}{book.listPrice.currencyCode}{' '}{book.listPrice.isOnSale && 'On Sale'}</h3>
 
       <button onClick={onBack}>Back</button>
     </section>

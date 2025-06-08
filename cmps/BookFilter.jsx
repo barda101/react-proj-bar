@@ -11,7 +11,7 @@ export function BookFilter({ filterBy, onSetFilter }) {
     let { value, name: field } = target
     switch (target.type) {
       case 'number':
-        value = +target.value
+        value = value === '' ? '' : +value
       break
     }
     setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value}))
