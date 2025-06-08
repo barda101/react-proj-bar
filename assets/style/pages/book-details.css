@@ -6,6 +6,11 @@
     padding-bottom: 15vh;
 }
 
+.book-details .book-details-nav {
+    display: flex;
+    gap: 10px;
+}
+
 .book-details h1 {
     color: var(--clr1);
     font-size: 2em;

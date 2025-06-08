@@ -2,17 +2,19 @@ import { LongTxt } from "../cmps/LongTxt.jsx";
 import { bookService } from "../services/book.service.js"
 
 const { useState, useEffect } = React
-const { useParams, useNavigate } = ReactRouterDOM
+const { useParams, useNavigate } = ReactRouter
+const { Link } = ReactRouterDOM
 //import { useParams, useNavigate } from 'react-router-dom'
 
 export function BookDetails() {
   const [book, setBook] = useState(null)
   const params = useParams()
+  console.log(params)
   const navigate = useNavigate()
 
   useEffect(() => {
     loadBook()
-  }, [params.id])
+  }, [params.bookId])
 
   function loadBook() {
     bookService.get(params.bookId)
@@ -44,6 +46,14 @@ export function BookDetails() {
   if(!book) return <div>Loading...</div>
   return (
     <section className="book-details">
+      <nav className='book-details-nav'>
+          <Link to={`/book/${book.prevBookId}`}>
+              <button><i className="fa-solid fa-arrow-left"></i></button>
+          </Link>
+          <Link to={`/book/${book.nextBookId}`}>
+              <button><i className="fa-solid fa-arrow-right"></i></button>
+          </Link>
+      </nav>
       <h1>{book.title}</h1>
       {/* <img src={`../assets/BooksImages/${Math.floor(Math.random() * 20) + 1}.jpg`} alt="book-image"/> */}
       <img src={book.thumbnail} alt="book-image"/>
