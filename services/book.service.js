@@ -492,16 +492,33 @@ function save(book) {
     }
 }
 
-function getEmptyBook(title = '', amount = 0, currencyCode = 'USD', isOnSale = false) {
+// function getEmptyBook(title = '', amount = 0, currencyCode = 'USD', isOnSale = false) {
+//     return {
+//         title,
+//         description: '',
+//         thumbnail: '',
+//         listPrice: {
+//             amount,
+//             currencyCode,
+//             isOnSale
+//         }
+//     }
+// }
+
+function getEmptyBook(title = '', amount = '', description = '', pageCount = '', language = 'en', authors = '') {
     return {
         title,
-        description: '',
-        thumbnail: '',
+        authors,
+        description,
+        pageCount,
+        thumbnail: `/assets/booksImages/15.jpg`,
+        language,
         listPrice: {
             amount,
-            currencyCode,
-            isOnSale
-        }
+            currencyCode: "EUR",
+            isOnSale: Math.random() > 0.7
+        },
+        reviews: []
     }
 }
 

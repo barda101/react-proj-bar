@@ -14,6 +14,7 @@
 @import "pages/book-index.css";
 @import "pages/book-details.css";
 @import "pages/car-edit.css";
+@import './cmps/BookEdit.css';
 
 
 /* Components */
@@ -22,4 +23,5 @@
 @import "cmps/book-list.css";
 @import "cmps/book-preview.css";
 @import "cmps/not-found.css";
+@import './cmps/UserMsg.css';
 
