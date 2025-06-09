@@ -9,7 +9,7 @@ const { Link } = ReactRouterDOM
 export function BookDetails() {
   const [book, setBook] = useState(null)
   const params = useParams()
-  console.log(params)
+  //onsole.log(params)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -22,6 +22,7 @@ export function BookDetails() {
       .catch(err => {
         console.log('err', err)
       })
+      console.log(book)
   }
 
   function onBack() {
