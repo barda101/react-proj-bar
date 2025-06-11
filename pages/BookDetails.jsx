@@ -1,5 +1,6 @@
 import { LongTxt } from "../cmps/LongTxt.jsx";
-import { bookService } from "../services/book.service.js"
+import { bookService } from "../services/book.service.js";
+import { AddReview } from "../cmps/AddReview.jsx"
 
 const { useState, useEffect } = React
 const { useParams, useNavigate } = ReactRouter
@@ -22,7 +23,6 @@ export function BookDetails() {
       .catch(err => {
         console.log('err', err)
       })
-      console.log(book)
   }
 
   function onBack() {
@@ -43,6 +43,16 @@ export function BookDetails() {
     if (amount < 20) return 'green'
     return ''
   }
+
+    function onAddReview(reviewToSave) {
+    bookService.saveReview(book.id, reviewToSave)
+      .then(() => loadBook())
+  }
+
+  function onRemoveReview(reviewId) {
+    bookService.removeReview(book.id, reviewId)
+      .then(() => loadBook())
+  }  
 
   if(!book) return <div>Loading...</div>
   return (
@@ -68,7 +78,29 @@ export function BookDetails() {
       <h4>{getPublishLabel(book.publishedDate)}</h4>
       <h3 className={getPriceClass(book.listPrice.amount)}>{book.listPrice.amount}{book.listPrice.currencyCode}{' '}{book.listPrice.isOnSale && 'On Sale'}</h3>
 
+
+      <AddReview onAddReview={onAddReview} />
+
+      <h3>Reviews:</h3>
+      <ul>
+        {book.reviews && book.reviews.map(review => (
+        <li key={review.id}>
+          <p><strong>{review.fullName}</strong> rated {review.rating} &#11088;</p>
+          <p>Read on: {review.date}</p>
+          <p>{review.txt}</p>
+          <button onClick={() => onRemoveReview(review.id)}>Delete</button>
+        </li>
+))}
+      </ul>
+        
+
       <button onClick={onBack}>Back</button>
+
+      
+
     </section>
+
+    
+
   )
 }

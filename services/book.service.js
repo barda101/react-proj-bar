@@ -454,6 +454,10 @@ export const bookService = {
     save,
     getEmptyBook,
     getDefaultFilter,
+    getEmptyReview,
+    saveReview,
+    removeReview,
+
 }
 
 // For Debug (easy access from console):
@@ -489,6 +493,33 @@ function save(book) {
         return storageService.put(BOOK_KEY, book)
     } else {
         return storageService.post(BOOK_KEY, book)
+    }
+}
+
+function saveReview(bookId, reviewToSave) {
+    return get(bookId).then(book => {
+        const review = _createReview(reviewToSave)
+        if (!book.reviews) book.reviews = []
+            book.reviews.unshift(review)
+        return save(book).then(() => review)
+    })
+}
+
+function removeReview(bookId, reviewId) {
+    return get(bookId).then(book => {
+        const newReviews = book.reviews.filter((review) => review.id !== reviewId)
+        book.reviews = newReviews
+        return save(book)
+    })
+}
+
+function getEmptyReview() {
+    return {
+        fullName: 'new name',
+        rating: 0,
+        date: new Date().toISOString().slice(0, 10),
+        txt: '',
+        selected: 0,
     }
 }
 
@@ -594,3 +625,10 @@ function _setNextPrevBookId(book) {
 //     book.thumbnail = "http://ca.org/books-photos/20.jpg"
 //     return book
 // }
+
+function _createReview(reviewToSave) {
+    return {
+        id: utilService.makeId(),
+        ...reviewToSave,
+    }
+}
